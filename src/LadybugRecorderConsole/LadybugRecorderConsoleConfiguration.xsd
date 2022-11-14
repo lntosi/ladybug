@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Ladybug post processing settings-->
+<xs:schema id="LadybugRecorderConsole" targetNamespace="http://www.ptgrey.com"  elementFormDefault="qualified" xmlns="http://www.ptgrey.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xml:lang="en">
+  <xs:element name="Configuration">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="General" type="General"/>
+        <xs:element name="Camera" type="Camera"/>
+        <xs:element name="GPS" type="GPS"/>
+        <xs:element name="Stream" type="Stream"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="General">
+  </xs:complexType>
+  <xs:complexType name ="Camera">
+    <xs:sequence>
+      <xs:element name="DataFormat">
+        <xs:annotation>
+          <xs:documentation>
+            Data format to start the camera in. Not all cameras support all data formats. See ladybug.h for further information about each data format.
+          </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="LADYBUG_DATAFORMAT_RAW8">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 8-bit images.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_HALF_HEIGHT_RAW8">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 8-bit images, half height.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_RAW12">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 12-bit images.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_HALF_HEIGHT_RAW12">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 12-bit images, half height.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_RAW16">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 16-bit images.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_HALF_HEIGHT_RAW16">
+              <xs:annotation>
+                <xs:documentation>Uncompressed 16-bit images, half height.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_COLOR_SEP_JPEG8">
+              <xs:annotation>
+                <xs:documentation>JPEG compressed 8-bit images.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_COLOR_SEP_HALF_HEIGHT_JPEG8">
+              <xs:annotation>
+                <xs:documentation>JPEG compressed 8-bit images, half height.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_COLOR_SEP_JPEG12">
+              <xs:annotation>
+                <xs:documentation>JPEG compressed 12-bit images.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_COLOR_SEP_HALF_HEIGHT_JPEG12">
+              <xs:annotation>
+                <xs:documentation>JPEG compressed 12-bit images, half height.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LADYBUG_DATAFORMAT_ANY">
+              <xs:annotation>
+                <xs:documentation>Any data format - chooses the data format currently used on camera.</xs:documentation>
+              </xs:annotation>
+            </xs:enumeration>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="FrameRate" type="xs:float">
+        <xs:annotation>
+          <xs:documentation>The frame rate to set to the camera.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="IsFrameRateAuto" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether to set the camera's frame rate automatically for the specified data format. This overrides the manual frame rate set above.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="JpegQualityPercentage">       
+        <xs:annotation>
+          <xs:documentation>JPEG compression quality to use. Range is from 0-100. This setting ignored for uncompressed data formats.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:minInclusive value="0"/>
+            <xs:maxExclusive value="100"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="IsJpegQualityAuto" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether to set the JPEG compression quality automatically based on the percentage of the image buffer to be used for JPEG image data. This overrides the manual JPEG quality percentage set above.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="JpegBufferPercentage">
+        <xs:annotation>
+          <xs:documentation>The percentage of the image buffer to be used for JPEG image data. Range is from 0-128 where 128 represents the entire image buffer.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:unsignedInt">
+            <xs:minInclusive value="0"/>
+            <xs:maxExclusive value="128"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GPS">
+    <xs:sequence>
+      <xs:element name="UseGps" type="xs:boolean">
+        <xs:annotation>
+          <xs:documentation>Whether to connect to a GPS device. If false, the rest of the GPS settings are ignored.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Port" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:documentation>For Windows only. The COM port that the GPS device is connected to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="DeviceName" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>For Linux only. The device path for the GPS device (e.g "/dev/ttyACM0").</xs:documentation>
+        </xs:annotation>        
+      </xs:element>
+      <xs:element name="BaudRate" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:documentation>The baud rate to use when communicating with the GPS device.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="RefreshIntervalMs" type="xs:unsignedInt">
+        <xs:annotation>
+          <xs:documentation>GPS data update time interval in milliseconds</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Stream">
+    <xs:sequence>
+      <xs:element name="DestinationDirectory" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Directory to record stream files to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns="http://www.ptgrey.com">
+  <General />
+  <Camera>
+    <DataFormat>LADYBUG_DATAFORMAT_COLOR_SEP_JPEG8</DataFormat>
+    <FrameRate>10</FrameRate>
+    <IsFrameRateAuto>true</IsFrameRateAuto>
+    <JpegQualityPercentage>80</JpegQualityPercentage>
+    <IsJpegQualityAuto>true</IsJpegQualityAuto>
+    <JpegBufferPercentage>110</JpegBufferPercentage>
+  </Camera>
+  <Stream>
+    <DestinationDirectory>.</DestinationDirectory>
+  </Stream>
+  <GPS>
+    <UseGps>false</UseGps>
+    <Port>4</Port> <!-- Windows Only -->
+    <DeviceName>/dev/ttyACM0</DeviceName> <!-- Linux Only -->
+    <BaudRate>115200</BaudRate>
+    <RefreshIntervalMs>1000</RefreshIntervalMs>
+  </GPS>
+</Configuration>
