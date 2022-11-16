@@ -231,7 +231,7 @@ int main(int argc, char* argv[])
             true );
         _HANDLE_ERROR
 
-        // Copy all the specified images to the destination file - AQUI A COPIA REALMENTE OCORRE
+        // Copy all the specified images to the destination file
         for (unsigned int currIndex = startImageIndex; currIndex <= endImageIndex; currIndex++ ) 
         {
             printf( "Copying %u of %u\n", currIndex+1,  uiNumOfImages ) ;
