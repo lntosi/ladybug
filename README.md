@@ -107,7 +107,7 @@ sudo apt-get remove ladybug
 /etc/ladybug
 /lib/ladybug
 /usr/src/ladybug		-> Examples
-/usr/share/doc/ladybug	-> Documentation
-/usr/include/ladybug	-> PATH
+/usr/share/doc/ladybug  	-> Documentation
+/usr/include/ladybug	  -> PATH
 /usr/lib/ladybug
 ```
