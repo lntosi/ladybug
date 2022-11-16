@@ -123,7 +123,9 @@ void usage()
         );
 }
 
-
+// A funcao main precisa de duas variáveis.
+// A primeira conta os parametros que deve ser pelo menos 2.
+// A segunda é um vetor parametros, como arquivo de origem e destino.
 int main(int argc, char* argv[])
 {
     char* pszConfigFileName = NULL;
@@ -132,29 +134,34 @@ int main(int argc, char* argv[])
     std::string configFileName;         
     bool bDeleteTempFile = false;    
 
-    // At least two parameters are needed 
+    // At least two parameters are needed - Se menos de 3 parametros sao passados, é exibido o manual
     if (argc < 3)
     {
         usage();
         return 0;
     }
 
-    pszSrcStreamName = argv[1];
-    pszDestStreamName = argv[2];
+    pszSrcStreamName = argv[1]; //A origem é colocada nessa posicao no vetor
+    pszDestStreamName = argv[2]; //O destino é colocada nessa posicao no vetor
 
     // The last three parameter are optional
+    // [calFile] [From] [To] São opcionais, obrigatorios sao SrcFileName OutputFileName
+    // É verificado se há diferenca entre os valores opcionais e os definidos como default
     if (argc > 3)
     {
         pszConfigFileName = argv[3];
-        if ( strcmp ( pszConfigFileName, "default") == 0)
+        if ( strcmp ( pszConfigFileName, "default") == 0) //https://www.geeksforgeeks.org/strcmp-in-c-cpp/
         {
             pszConfigFileName = NULL;
         }
     }
 
-    unsigned int startImageIndex = (argc > 4) ? atoi(argv[4]) : 0;
-    unsigned int endImageIndex = (argc > 5) ? atoi(argv[5]) : startImageIndex;
+    //converts the string argument str to an integer - essas variaveis sao importantes caso o valor from e to sejam definidos
+    //https://www.tutorialspoint.com/c_standard_library/c_function_atoi.htm
+    unsigned int startImageIndex = (argc > 4) ? atoi(argv[4]) : 0; //[From] - the number of the first image to copy
+    unsigned int endImageIndex = (argc > 5) ? atoi(argv[5]) : startImageIndex; //[To] - the number of the last image to copy
 
+    //O número inicial deve ser menor que o final... rs
     if ( startImageIndex > endImageIndex )
     {
         printf("Invalid image numbers.\n");
@@ -162,7 +169,7 @@ int main(int argc, char* argv[])
     }
 
     // Create stream context for reading
-    LadybugStreamContext readingContext; 
+    LadybugStreamContext readingContext; //Um contexto precisa ser criado para que se tenha acesso a métodos de leitura e escrita
     LadybugError error = ladybugCreateStreamContext( &readingContext );
     _HANDLE_ERROR
 
@@ -171,7 +178,7 @@ int main(int argc, char* argv[])
     error = ladybugCreateStreamContext( &writingContext );
     _HANDLE_ERROR
 
-    // Open the source stream file
+    // Open the source stream file - O aquivo de origem é um dos parametros passados
     printf( "Opening source stream file : %s\n", pszSrcStreamName);
     error = ladybugInitializeStreamForReading( readingContext, pszSrcStreamName, true ); 
     _HANDLE_ERROR
@@ -188,7 +195,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        configFileName = pszConfigFileName;
+        configFileName = pszConfigFileName; //o arq de config é sobrescrito com os argumentos passados pelo usuario, caso nao seja nulo, ou seja, o usuario nao quer os valores default
     }
 
     // Read the stream header
@@ -199,16 +206,16 @@ int main(int argc, char* argv[])
     {
         // Get the total number of the images in these stream files
         unsigned int uiNumOfImages = 0;
-        error = ladybugGetStreamNumOfImages( readingContext, &uiNumOfImages );
+        error = ladybugGetStreamNumOfImages( readingContext, &uiNumOfImages ); //uiNumOfImages - Um método que coleta o número de imagens de um contexto
         _HANDLE_ERROR
 
-        if ( endImageIndex > uiNumOfImages || argc < 6  )
+        if ( endImageIndex > uiNumOfImages || argc < 6  ) // se a ultima img informada pelo usario for maior que : o número de imagens do contexto ou argumentos menor q 6
         {
-            endImageIndex = uiNumOfImages - 1;
+            endImageIndex = uiNumOfImages - 1; // a variável será sobrescrita pelo número de imagens do contexto -1
         }
 
-        printf( "The source stream file has %u images.\n", uiNumOfImages );
-        printf( "Copy from %u to %u to %s-000000.pgr ...\n", startImageIndex, endImageIndex, pszDestStreamName) ;
+        printf( "The source stream file has %u images.\n", uiNumOfImages ); // exibe o número de imagens do contexto
+        printf( "Copy from %u to %u to %s-000000.pgr ...\n", startImageIndex, endImageIndex, pszDestStreamName) ; //Criando uma msg pra mostrar na tela
 
         // Seek the position of the first image
         error = ladybugGoToImage( readingContext, startImageIndex );
@@ -224,7 +231,7 @@ int main(int argc, char* argv[])
             true );
         _HANDLE_ERROR
 
-        // Copy all the specified images to the destination file
+        // Copy all the specified images to the destination file - AQUI A COPIA REALMENTE OCORRE
         for (unsigned int currIndex = startImageIndex; currIndex <= endImageIndex; currIndex++ ) 
         {
             printf( "Copying %u of %u\n", currIndex+1,  uiNumOfImages ) ;
