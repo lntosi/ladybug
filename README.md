@@ -108,6 +108,6 @@ sudo apt-get remove ladybug
 /lib/ladybug
 /usr/src/ladybug		-> Examples
 /usr/share/doc/ladybug  	-> Documentation
-/usr/include/ladybug	  -> PATH
+/usr/include/ladybug      -> PATH
 /usr/lib/ladybug
 ```
