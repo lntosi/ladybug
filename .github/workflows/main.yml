@@ -29,8 +29,8 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v3.1.1
         with:
-          file: ./docker-quality/Dockerfile
-          context: ./docker-quality
+          file: ./docker-ladybug/Dockerfile
+          context: ./docker-ladybug
           push: true
           tags: |
             lntosi/ladybug-sw:latest
