@@ -1,4 +1,4 @@
-FROM ladybug-sw:latest
+FROM lntosi/ladybug-sw:latest
 LABEL Description="Docker image for Developers"
 ENV DEBIAN_FRONTEND noninteractive
 
