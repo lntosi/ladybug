@@ -5,4 +5,4 @@ ENV DEBIAN_FRONTEND noninteractive
 #Update the SO
 RUN apt update && apt upgrade -y
 
-COPY ../tobeCopied/* /tmp
+COPY ../tobeCopied/ /tmp
