@@ -12,6 +12,11 @@ RUN apt-get update && \
   apt-get install -y \
   software-properties-common \
   sudo \
+  wget \
+  gcc \
+  g++ \
+  libusb-1.0-0-dev \
+  make \
   dpkg \
   libicu55 \
   xsdcxx \
