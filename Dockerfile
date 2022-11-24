@@ -8,7 +8,6 @@ RUN apt update && apt upgrade -y
 COPY ./*.deb /tmp
 
 #General Requirements
-
 RUN apt-get update && \
   apt-get install -y \
   software-properties-common \
@@ -23,7 +22,8 @@ RUN apt-get update && \
   libavformat-dev  &&\
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-  
-  
-#RUN sudo dpkg -i /tmp/libxerces-c3.1_3.1.3+debian-1_amd64.deb
+
+RUN dpkg -i /tmp/libxerces-c3.1_3.1.3+debian-1_amd64.deb
+
+#LadyBug
 #RUN sudo dpkg -i /tmp/dpkg -i ladybug-1.16.3.48_amd64.deb
