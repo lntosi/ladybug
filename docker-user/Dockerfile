@@ -1,4 +1,4 @@
-FROM quality-metrics:latest
+FROM lntosi/ladybug-sw
 LABEL Description="Docker image for Developers"
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,5 +10,5 @@ RUN groupadd -g $gid $username
 RUN useradd -ms /bin/bash --gid $gid --uid $uid $username && adduser $username sudo && echo -n "$username:psswrd" | chpasswd
 
 USER $username
-WORKDIR /data/nie/teams/PM
+WORKDIR /data/datasets-raw/
 CMD "/bin/bash"
