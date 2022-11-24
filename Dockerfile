@@ -15,6 +15,9 @@ RUN apt-get update && \
   wget \
   gcc \
   g++ \
+  libraw1394-tools \
+  libraw1394-dev \
+  libc-dev-bin \
   libusb-1.0-0-dev \
   make \
   dpkg \
