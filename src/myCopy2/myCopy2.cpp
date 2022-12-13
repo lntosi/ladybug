@@ -72,15 +72,12 @@ int main(int argc, char* argv[])
     if (argc < 3)
     {
         printf("Number of parameter incorrect.\n ");
-		printf("myCopy SrcFileName OutputFileName\n");
+		printf("myCopy2 SrcFileName OutputFileName\n");
         return 0;
     }	
 	
 	pszSrcStreamName = argv[1]; //A origem é colocada nessa posicao no vetor
     pszDestStreamName = argv[2]; //O destino é colocada nessa posicao no vetor
-	
-	unsigned int startImageIndex = (argc > 4) ? atoi(argv[4]) : 0;
-    unsigned int endImageIndex = (argc > 5) ? atoi(argv[5]) : startImageIndex;
 	
 	// Create stream context for reading - Um contexto precisa ser criado para que se tenha acesso a métodos de leitura e escrita
     LadybugStreamContext readingContext;
@@ -121,20 +118,15 @@ int main(int argc, char* argv[])
     {
         // Get the total number of the images in these stream files
         unsigned int uiNumOfImages = 0;
+        unsigned int currIndex = 0;
         error = ladybugGetStreamNumOfImages( readingContext, &uiNumOfImages );
         _HANDLE_ERROR
 		
-        // This conditional prevents the enduser to input wrong information, the variable will be overwritten by the context
-        if ( endImageIndex > uiNumOfImages || argc < 6  ) // if the endImageIndex (informed by enduser) is > the context or the number of arguments is < 6
-        {
-            endImageIndex = uiNumOfImages - 1; // the variable will be overwritten by the context
-        }
-
 		printf( "The source stream file has %u images.\n", uiNumOfImages ); // exibe o número de imagens do contexto
-        printf( "Copy from %u to %u to %s-000000.pgr ...\n", startImageIndex, endImageIndex, pszDestStreamName) ; //Criando uma msg pra mostrar na tela
+        printf( "Copy from %u to %u to %s-000000.pgr ...\n", currIndex, uiNumOfImages, pszDestStreamName) ; //Criando uma msg pra mostrar na tela
 		
 		// Seek the position of the first image
-        error = ladybugGoToImage( readingContext, startImageIndex );
+        error = ladybugGoToImage( readingContext, currIndex);
         _HANDLE_ERROR
 		
 		// Open the destination file
@@ -148,10 +140,9 @@ int main(int argc, char* argv[])
             true );
         _HANDLE_ERROR
         
-
         // Copy all the specified images to the destination file - AQUI A COPIA REALMENTE OCORRE
         
-        for (unsigned int currIndex = startImageIndex; currIndex <= endImageIndex; currIndex++ ) 
+        for (unsigned int currIndex = currIndex; currIndex < uiNumOfImages; currIndex++ ) 
         {
             printf( "Copying %u of %u\n", currIndex+1,  uiNumOfImages ) ;
 
@@ -161,7 +152,7 @@ int main(int argc, char* argv[])
             _HANDLE_ERROR
 
             // Write the image to the destination file
-            error = ladybugWriteImageToStream( writingContext,  &currentImage );
+            error = ladybugWriteImageToStream( writingContext,  &currentImage ); //Possible? grab the currentImage from an array
             _HANDLE_ERROR
         };
     }
