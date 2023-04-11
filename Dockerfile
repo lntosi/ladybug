@@ -3,7 +3,7 @@ LABEL Description="LadyBug"
 ENV DEBIAN_FRONTEND noninteractive
 
 #Update the SO
-RUN apt update && apt upgrade -y
+# RUN apt update && apt upgrade -y
 
 COPY ./*.deb /tmp
 
