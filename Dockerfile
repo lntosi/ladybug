@@ -8,8 +8,7 @@ RUN apt update && apt upgrade -y
 COPY ./*.deb /tmp
 
 #General Requirements
-RUN apt-get update && \
-  apt-get install -y \
+RUN apt-get update && apt-get install -yq \
   software-properties-common \
   sudo \
   wget \
@@ -27,9 +26,11 @@ RUN apt-get update && \
   freeglut3-dev \
   libswscale-dev \
   libavcodec-dev \
-  libavformat-dev  &&\
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+  libavformat-dev \
+  tzdata \
+  && ln -fs /usr/share/zoneinfo/Europe/Brussels /etc/localtime \
+  && dpkg-reconfigure -f noninteractive tzdata \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN dpkg -i /tmp/libxerces-c3.1_3.1.3+debian-1_amd64.deb
 
